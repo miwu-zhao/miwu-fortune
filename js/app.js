@@ -267,18 +267,19 @@ function renderRadar() {
 }
 
 function renderDecode(z, m, s) {
+    // 生成更丰富的三维解码内容
     const decodeData = [
         {
             title: `星象层 · ${state.zodiac}`,
-            content: `${state.zodiac}本周的核心能量围绕"${z.title}"展开。这不仅是外在运势的映射，更是内在节奏的显现。作为${state.zodiac}，你对${z.lucky_day}的能量特别敏感，这天适合重要决策。`
+            content: generateZodiacDecode(z, m, s)
         },
         {
-            title: `性格层 · ${m.name}`,
-            content: `${m.core_traits ? m.core_traits.substring(0, 100) : m.description}。本周你的${m.keywords[0]}特质会 amplified，在处理问题时会更依赖这一优势。`
+            title: `性格层 · ${m.name} (${state.mbti})`,
+            content: generateMbtiDecode(z, m, s)
         },
         {
             title: `状态层 · ${s.name}`,
-            content: `当前"${s.name}"状态意味着：${s.core_state ? s.core_state.substring(0, 80) : s.description}。这个状态会影响你本周的决策方式和人际互动模式。`
+            content: generateSbtiDecode(z, m, s)
         }
     ];
     
@@ -290,22 +291,100 @@ function renderDecode(z, m, s) {
     `).join('');
 }
 
+function generateZodiacDecode(z, m, s) {
+    const ranking = state.fortuneData.rankings;
+    let rankInfo = '';
+    
+    // 检查排名
+    const topIndex = ranking?.top?.findIndex(r => r.sign === state.zodiac);
+    const bottomIndex = ranking?.bottom?.findIndex(r => r.sign === state.zodiac);
+    
+    if (topIndex !== -1 && topIndex !== undefined) {
+        rankInfo = `<span class="highlight">本周运势排名第${topIndex + 1}</span>，能量场格外活跃。`;
+    } else if (bottomIndex !== -1 && bottomIndex !== undefined) {
+        rankInfo = `<span class="highlight">本周能量相对低迷</span>，但这恰恰是内省和调整的绝佳时机。`;
+    }
+    
+    return `
+        <p>${state.zodiac}本周的核心能量围绕"<strong>${z.title}</strong>"展开。</p>
+        <p style="margin-top: 10px;">${rankInfo}</p>
+        <p style="margin-top: 10px;">${z.description}</p>
+        <p style="margin-top: 10px; color: var(--gold);">
+            📅 <strong>关键日期</strong>：${z.lucky_day}能量最旺，适合推进重要事项。
+        </p>
+        <p style="margin-top: 8px; color: var(--violet);">
+            ⚠️ <strong>能量预警</strong>：与${z.avoid_sign}的互动需要更多耐心，这是能量边界，不是人际回避。
+        </p>
+    `;
+}
+
+function generateMbtiDecode(z, m, s) {
+    const mbtiType = state.mbti;
+    const keywords = m.keywords || [];
+    
+    // 根据MBTI四个维度生成个性化分析
+    const ei = mbtiType[0] === 'E' ? '外向' : '内向';
+    const sn = mbtiType[1] === 'S' ? '实感' : '直觉';
+    const tf = mbtiType[2] === 'T' ? '思考' : '情感';
+    const jp = mbtiType[3] === 'J' ? '判断' : '知觉';
+    
+    return `
+        <p>${m.core_traits || m.description}</p>
+        <p style="margin-top: 12px;">
+            <strong>你的认知偏好</strong>：${ei}(${mbtiType[0]}) · ${sn}(${mbtiType[1]}) · ${tf}(${mbtiType[2]}) · ${jp}(${mbtiType[3]})
+        </p>
+        <p style="margin-top: 10px;">
+            <strong>本周特质放大</strong>：你的「${keywords[0]}」特质会被星象能量放大。在处理问题时，这既是优势也是盲点——<em>过度依赖会变成限制</em>。
+        </p>
+        <p style="margin-top: 10px;">
+            <strong>成长方向</strong>：${m.growth_edge || '本周适合探索自己的内在边界'}
+        </p>
+        <p style="margin-top: 10px; color: var(--rose);">
+            💡 <strong>使用建议</strong>：${m.lucky_activities ? m.lucky_activities.slice(0, 3).join('、') : '深度思考、独立行动'}
+        </p>
+    `;
+}
+
+function generateSbtiDecode(z, m, s) {
+    return `
+        <p><strong>"${s.motto}"</strong></p>
+        <p style="margin-top: 12px;">${s.core_state || s.description}</p>
+        <p style="margin-top: 10px;">
+            <strong>本周节奏</strong>：${s.weekly_rhythm || '保持自我觉察，顺应内在节奏'}
+        </p>
+        <p style="margin-top: 10px;">
+            <strong>内心张力</strong>：${s.inner_tension || '觉察内在的微妙波动，不压抑也不过度放大'}
+        </p>
+        <p style="margin-top: 10px;">
+            <strong>关系提醒</strong>：${s.relationship_reminder || '在关系中保持真实，不被角色定义'}
+        </p>
+        <p style="margin-top: 10px; color: var(--gold);">
+            ✨ <strong>行动关键词</strong>：${s.action_hint || '接纳当下，顺势而为'}
+        </p>
+    `;
+}
+
 function renderIssues(z, m, s) {
     const issues = [
         {
             icon: '◇',
-            text: `${m.name}的${m.keywords[0]}特质与本周${state.zodiac}的能量可能产生张力，在${z.lucky_day}前后需要特别留意决策节奏。`,
-            tag: '性格×星象'
+            text: `${m.name}的「${m.keywords[0]}」特质与本周${state.zodiac}能量产生微妙共振。当事情不如预期时，你会倾向于用「${m.keywords[1] || '理性'}」来应对。觉察这个模式，它既是你的力量，也可能成为盲区。`,
+            tag: '性格×星象共振'
         },
         {
             icon: '◈',
-            text: `${s.name}状态提示：${s.inner_tension ? s.inner_tension.substring(0, 60) : '本周内心可能存在微妙张力'}。觉察这种张力，而不是压抑它。`,
-            tag: '状态觉察'
+            text: `「${s.name}」状态下，你内心有一股${s.inner_tension ? s.inner_tension.substring(0, 50) : '微妙的张力在涌动'}。这不是问题，而是信号——你的内在正在重新整合。给它空间，不要急着解决。`,
+            tag: '内在信号'
         },
         {
             icon: '○',
-            text: `${z.avoid_sign ? `本周与${z.avoid_sign}相关的人事物需要更多耐心` : '人际互动需要边界感'}。这不是回避，而是能量管理。`,
-            tag: '人际边界'
+            text: `本周与${z.avoid_sign || '某些人'}的互动可能消耗更多能量。这不是要你回避，而是提醒：<strong>边界是能量管理，不是人际疏离</strong>。在关系中选择何时投入、何时抽离。`,
+            tag: '能量边界'
+        },
+        {
+            icon: '◈',
+            text: `${z.lucky_day}前后，你可能会遇到一个需要快速决策的时刻。作为${m.name}，你的本能反应是${m.keywords[2] || '深思熟虑'}。给自己30秒缓冲，让直觉和理性对话。`,
+            tag: '决策提醒'
         }
     ];
     
@@ -321,26 +400,34 @@ function renderIssues(z, m, s) {
 }
 
 function renderGuide(z, m, s) {
+    const mbtiType = state.mbti;
+    
+    // 根据MBTI生成个性化建议
+    const careerAdvice = generateCareerAdvice(z, m, s, mbtiType);
+    const relationshipAdvice = generateRelationshipAdvice(z, m, s, mbtiType);
+    const selfCareAdvice = generateSelfCareAdvice(z, m, s, mbtiType);
+    const energyAdvice = generateEnergyAdvice(z, m, s, mbtiType);
+    
     const guides = [
         {
             icon: '↗',
             title: '事业/学业',
-            text: `${z.lucky_day}是推进重要事务的最佳时机。作为${m.name}，发挥你的${m.keywords[0]}优势。`
+            text: careerAdvice
         },
         {
-            icon: '◇',
+            icon: '♡',
             title: '关系经营',
-            text: `${s.relationship_reminder ? s.relationship_reminder.substring(0, 50) : '本周适合深度对话而非表面社交'}。`
+            text: relationshipAdvice
         },
         {
             icon: '○',
             title: '自我照顾',
-            text: `${m.growth_edge ? m.growth_edge.substring(0, 40) : '给自己独处和充电的空间'}。`
+            text: selfCareAdvice
         },
         {
             icon: '◈',
-            title: '能量管理',
-            text: `${z.lucky_day}前后能量峰值，其他时间保持节奏，避免过度消耗。`
+            title: '能量节奏',
+            text: energyAdvice
         }
     ];
     
@@ -351,6 +438,61 @@ function renderGuide(z, m, s) {
             <div class="guide-text">${g.text}</div>
         </div>
     `).join('');
+}
+
+function generateCareerAdvice(z, m, s, mbtiType) {
+    const luckyDay = z.lucky_day;
+    const keyword = m.keywords?.[0] || '专注';
+    
+    // 根据MBTI类型给出具体建议
+    const mbtiTips = {
+        'E': '主动沟通、展示想法、扩展人脉',
+        'I': '深度思考、独立完成、避免过多会议',
+        'S': '注重细节、踏实执行、用数据说话',
+        'N': '创意策划、展望未来、提出新方案',
+        'T': '逻辑分析、客观决策、解决难题',
+        'F': '团队协作、关注感受、建立共识',
+        'J': '制定计划、按部推进、及时复盘',
+        'P': '灵活应变、保持开放、探索可能'
+    };
+    
+    return `${luckyDay}是推进重要事务的最佳时机。作为${m.name}，本周重点发挥「${keyword}」优势。具体行动：${mbtiTips[mbtiType[0]]}、${mbtiTips[mbtiType[2]]}`;
+}
+
+function generateRelationshipAdvice(z, m, s, mbtiType) {
+    const luckySign = z.lucky_sign || '水象星座';
+    
+    const tips = {
+        'E': '主动发起对话，但也要留出倾听空间',
+        'I': '选择一对一的深度交流，而非群体社交',
+        'F': '表达你的真实感受，不要过度理性化',
+        'T': '多一点温度，少一点道理'
+    };
+    
+    return `${s.relationship_reminder ? s.relationship_reminder.substring(0, 40) : '本周适合深度连接'}。与${luckySign}的人互动更顺畅。小贴士：${tips[mbtiType[0]] || tips[mbtiType[2]] || '保持真实，不必刻意取悦'}。`;
+}
+
+function generateSelfCareAdvice(z, m, s, mbtiType) {
+    const activities = m.lucky_activities || ['独处', '思考', '休息'];
+    
+    const selfCareTips = {
+        'I': '每天预留一段完全独处的时间充电',
+        'E': '和朋友聊天也是充电，但要选择高质量社交',
+        'N': '允许自己天马行空，创意是最好的休息',
+        'S': '做些手工、运动，让身体动起来',
+        'T': '写日记整理思绪，逻辑能带来平静',
+        'F': '听音乐、看展，让情感有出口',
+        'J': '安排好的休息时间就认真休息',
+        'P': '不需要计划休息，随心而动'
+    };
+    
+    return `${m.growth_edge ? m.growth_edge.substring(0, 35) : '给自己独处和充电的空间'}。本周适合：${activities.slice(0, 2).join('、')}。${selfCareTips[mbtiType[0]] || ''}`;
+}
+
+function generateEnergyAdvice(z, m, s, mbtiType) {
+    const luckyDay = z.lucky_day;
+    
+    return `${luckyDay}前后能量达到峰值，可以安排重要事项。其他时间保持匀速前进，不要过度消耗。作为${mbtiType[0] === 'J' ? 'J型人' : 'P型人'}，${mbtiType[3] === 'J' ? '按计划行事最安心，但也要允许适度弹性' : '保持灵活很重要，但重要事项还是要设deadline'}。`;
 }
 
 function renderParams(z) {
