@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>miwu.迷雾 - 三维运势解码</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 星空背景 -->
+    <div class="starfield">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="magic-circle">
+                <div class="circle-ring"></div>
+                <div class="circle-ring"></div>
+                <div class="circle-ring"></div>
+                <div class="center-symbol">◈</div>
+            </div>
+            <p class="loading-text">解码命运坐标...</p>
+        </div>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="brand">
+                <span class="brand-text">miwu.</span>
+                <span class="brand-name">迷雾</span>
+            </div>
+            <p class="tagline">三维运势解码系统</p>
+        </header>
+
+        <!-- 选择区域 -->
+        <section class="selection-section">
+            <div class="selector-block">
+                <div class="selector-header">
+                    <span class="selector-num">01</span>
+                    <span class="selector-title">星象坐标</span>
+                </div>
+                <div class="zodiac-grid" id="zodiacGrid"></div>
+            </div>
+
+            <div class="selector-block">
+                <div class="selector-header">
+                    <span class="selector-num">02</span>
+                    <span class="selector-title">人格图谱</span>
+                    <a href="https://www.16personalities.com/ch" target="_blank" class="help-link">测一测</a>
+                </div>
+                <div class="mbti-grid" id="mbtiGrid"></div>
+            </div>
+
+            <div class="selector-block">
+                <div class="selector-header">
+                    <span class="selector-num">03</span>
+                    <span class="selector-title">状态锚点</span>
+                    <a href="https://www.bilibili.com/search?keyword=SBTI" target="_blank" class="help-link">了解</a>
+                </div>
+                <div class="sbti-scroll" id="sbtiScroll"></div>
+            </div>
+
+            <button class="decode-btn" id="queryBtn">
+                <span>解码</span>
+                <span class="decode-arrow">→</span>
+            </button>
+        </section>
+
+        <!-- 运势结果区域 -->
+        <section class="result-section" id="resultSection" style="display: none;">
+            
+            <!-- 核心摘要 -->
+            <div class="summary-block">
+                <div class="summary-header">
+                    <span class="summary-label">本周核心</span>
+                    <span class="summary-week" id="weekInfo"></span>
+                </div>
+                <div class="summary-title" id="fortuneTitle"></div>
+                <div class="summary-subtitle" id="userConfig"></div>
+            </div>
+
+            <!-- 能量图谱 -->
+            <div class="energy-block">
+                <div class="energy-chart">
+                    <canvas id="fortuneRadar"></canvas>
+                </div>
+                <div class="energy-metrics" id="energyMetrics"></div>
+            </div>
+
+            <!-- 三维解码 -->
+            <div class="decode-block">
+                <div class="decode-header">三维解码</div>
+                <div class="decode-grid" id="decodeGrid"></div>
+            </div>
+
+            <!-- 关键议题 -->
+            <div class="issues-block">
+                <div class="issues-header">本周关键议题</div>
+                <div class="issues-list" id="issuesList"></div>
+            </div>
+
+            <!-- 行动指南 -->
+            <div class="guide-block">
+                <div class="guide-header">行动指南</div>
+                <div class="guide-grid" id="guideGrid"></div>
+            </div>
+
+            <!-- 幸运参数 -->
+            <div class="params-block">
+                <div class="params-header">幸运参数</div>
+                <div class="params-grid" id="paramsGrid"></div>
+            </div>
+
+            <!-- 底部操作 -->
+            <div class="actions-block">
+                <button class="action-btn" id="shareBtn">生成报告</button>
+                <button class="action-btn outline" id="historyBtn">往期回顾</button>
+            </div>
+        </section>
+
+        <!-- 模态框 -->
+        <div class="modal" id="historyModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span>往期回顾</span>
+                    <button class="modal-close" id="closeHistory">×</button>
+                </div>
+                <div class="modal-body" id="historyList"></div>
+            </div>
+        </div>
+
+        <div class="modal" id="shareModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span>运势报告</span>
+                    <button class="modal-close" id="closeShare">×</button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="shareCanvas"></canvas>
+                    <p class="share-tip">长按保存图片</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <span>miwu.迷雾</span>
+        <span class="footer-divider">|</span>
+        <span>仅供娱乐参考</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
