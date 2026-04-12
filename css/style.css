@@ -28,8 +28,8 @@
     --rose-dim: rgba(196, 160, 168, 0.1);
     
     /* 字体 */
-    --serif: 'Noto Serif SC', 'Songti SC', serif;
-    --sans: 'Noto Sans SC', 'SF Pro Display', -apple-system, sans-serif;
+    --serif: 'ZCOOL XiaoWei', 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+    --sans: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', -apple-system, sans-serif;
     
     /* 间距系统 */
     --space-xs: 4px;
@@ -60,18 +60,20 @@
 }
 
 html {
-    font-size: 16px;
+    font-size: 18px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 body {
     font-family: var(--sans);
     background: var(--void);
     color: var(--light);
-    line-height: 1.6;
+    line-height: 1.8;
     min-height: 100vh;
     overflow-x: hidden;
+    letter-spacing: 0.02em;
 }
 
 /* ─────────────────────────────────────────────
@@ -134,7 +136,7 @@ body {
 
 .brand-text {
     font-family: var(--serif);
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 0.1em;
     color: var(--light);
@@ -142,14 +144,14 @@ body {
 
 .brand-name {
     font-family: var(--serif);
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 0.3em;
     color: var(--light);
 }
 
 .tagline {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     letter-spacing: 0.25em;
     color: var(--smoke);
     text-transform: uppercase;
@@ -185,13 +187,13 @@ body {
 
 .selector-num {
     font-family: var(--serif);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: var(--gold);
     letter-spacing: 0.1em;
 }
 
 .selector-title {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0.05em;
     color: var(--light);
@@ -248,12 +250,12 @@ body {
 }
 
 .zodiac-icon {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1;
 }
 
 .zodiac-name {
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     letter-spacing: 0.05em;
 }
 
@@ -271,7 +273,7 @@ body {
     border-radius: var(--radius-sm);
     color: var(--smoke);
     font-family: 'SF Mono', 'Monaco', monospace;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.05em;
     cursor: pointer;
     transition: all var(--duration) var(--ease);
@@ -335,7 +337,7 @@ body {
     border: 1px solid var(--haze);
     border-radius: var(--radius-sm);
     color: var(--smoke);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     white-space: nowrap;
     cursor: pointer;
     transition: all var(--duration) var(--ease);
@@ -347,13 +349,13 @@ body {
 }
 
 .sbti-code {
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     color: var(--gold);
     letter-spacing: 0.05em;
 }
 
 .sbti-name {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
 }
 
 .sbti-btn::before {
@@ -448,7 +450,7 @@ body {
 }
 
 .summary-label {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.3em;
     color: var(--smoke);
     text-transform: uppercase;
@@ -457,7 +459,7 @@ body {
 
 .summary-title {
     font-family: var(--serif);
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 400;
     line-height: 1.4;
     letter-spacing: 0.05em;
@@ -466,7 +468,7 @@ body {
 }
 
 .summary-subtitle {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     color: var(--smoke);
     letter-spacing: 0.1em;
 }
@@ -519,13 +521,13 @@ body {
 }
 
 .metric-label {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--smoke);
 }
 
 .metric-value {
     font-family: var(--serif);
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: var(--gold);
 }
 
@@ -535,7 +537,7 @@ body {
 }
 
 .decode-header {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.3em;
     color: var(--smoke);
     text-transform: uppercase;
@@ -566,7 +568,7 @@ body {
 }
 
 .decode-title {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     color: var(--light);
@@ -574,7 +576,7 @@ body {
 }
 
 .decode-content {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     line-height: 1.7;
     color: var(--smoke);
 }
@@ -585,7 +587,7 @@ body {
 }
 
 .issues-header {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.3em;
     color: var(--smoke);
     text-transform: uppercase;
@@ -620,13 +622,13 @@ body {
 }
 
 .issue-text {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     line-height: 1.6;
     color: var(--smoke);
 }
 
 .issue-tag {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     color: var(--violet);
     margin-top: var(--space-xs);
 }
@@ -637,7 +639,7 @@ body {
 }
 
 .guide-header {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.3em;
     color: var(--smoke);
     text-transform: uppercase;
@@ -660,19 +662,19 @@ body {
 }
 
 .guide-icon {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-bottom: var(--space-sm);
 }
 
 .guide-title {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     letter-spacing: 0.1em;
     color: var(--gold);
     margin-bottom: var(--space-sm);
 }
 
 .guide-text {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     line-height: 1.6;
     color: var(--smoke);
 }
@@ -683,7 +685,7 @@ body {
 }
 
 .params-header {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.3em;
     color: var(--smoke);
     text-transform: uppercase;
@@ -706,7 +708,7 @@ body {
 }
 
 .param-label {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     letter-spacing: 0.1em;
     color: var(--smoke);
     margin-bottom: var(--space-xs);
@@ -714,7 +716,7 @@ body {
 
 .param-value {
     font-family: var(--serif);
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--light);
 }
 
@@ -740,7 +742,7 @@ body {
     border: 1px solid var(--haze);
     border-radius: var(--radius-sm);
     color: var(--smoke);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     letter-spacing: 0.1em;
     cursor: pointer;
     transition: all var(--duration) var(--ease);
@@ -790,7 +792,7 @@ body {
     align-items: center;
     padding: var(--space-lg);
     border-bottom: 1px solid var(--haze);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     letter-spacing: 0.1em;
 }
 
@@ -874,7 +876,7 @@ body {
 }
 
 .loading-text {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     letter-spacing: 0.3em;
     color: var(--smoke);
     animation: breathe 2s var(--ease) infinite;
@@ -888,7 +890,7 @@ body {
     z-index: 1;
     text-align: center;
     padding: var(--space-xl);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.1em;
     color: var(--smoke);
 }
