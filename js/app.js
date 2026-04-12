@@ -23,10 +23,22 @@ const ZODIAC_DATA = [
 ];
 
 const MBTI_TYPES = [
-    'INTJ', 'INTP', 'ENTJ', 'ENTP',
-    'INFJ', 'INFP', 'ENFJ', 'ENFP',
-    'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ',
-    'ISTP', 'ISFP', 'ESTP', 'ESFP'
+    { code: 'INTJ', name: '建筑师' },
+    { code: 'INTP', name: '逻辑学家' },
+    { code: 'ENTJ', name: '指挥官' },
+    { code: 'ENTP', name: '辩论家' },
+    { code: 'INFJ', name: '提倡者' },
+    { code: 'INFP', name: '调停者' },
+    { code: 'ENFJ', name: '主人公' },
+    { code: 'ENFP', name: '竞选者' },
+    { code: 'ISTJ', name: '物流师' },
+    { code: 'ISFJ', name: '守卫者' },
+    { code: 'ESTJ', name: '总经理' },
+    { code: 'ESFJ', name: '执政官' },
+    { code: 'ISTP', name: '鉴赏家' },
+    { code: 'ISFP', name: '探险家' },
+    { code: 'ESTP', name: '企业家' },
+    { code: 'ESFP', name: '表演者' }
 ];
 
 const state = {
@@ -74,7 +86,10 @@ function renderSelectors() {
     
     // MBTI
     document.getElementById('mbtiGrid').innerHTML = MBTI_TYPES.map(t => `
-        <button class="mbti-btn" data-value="${t}">${t}</button>
+        <button class="mbti-btn" data-value="${t.code}">
+            <span class="mbti-code">${t.code}</span>
+            <span class="mbti-name">${t.name}</span>
+        </button>
     `).join('');
     
     // SBTI

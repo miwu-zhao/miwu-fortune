@@ -267,17 +267,32 @@ body {
 }
 
 .mbti-btn {
-    padding: var(--space-sm) 0;
+    padding: var(--space-sm);
     background: transparent;
     border: 1px solid var(--haze);
     border-radius: var(--radius-sm);
     color: var(--smoke);
-    font-family: 'SF Mono', 'Monaco', monospace;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
     cursor: pointer;
     transition: all var(--duration) var(--ease);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+}
+
+.mbti-code {
+    font-family: 'SF Mono', 'Monaco', monospace;
+    font-size: 0.65rem;
+    color: var(--violet);
+    letter-spacing: 0.05em;
+}
+
+.mbti-name {
+    font-size: 0.6rem;
+    letter-spacing: 0.02em;
 }
 
 .mbti-btn::before {
