@@ -41,6 +41,37 @@ const MBTI_TYPES = [
     { code: 'ESFP', name: '表演者' }
 ];
 
+// SBTI数据直接嵌入（避免网络加载问题）
+const SBTI_DATA = {
+    "CTRL": { "name": "拿捏者", "motto": "怎么样，被我拿捏了吧？", "keywords": ["掌控", "自信", "主导", "精准"], "description": "天生领导者气质，总能精准把握局势，让一切尽在掌握" },
+    "ATM-er": { "name": "送钱者", "motto": "你以为我很有钱吗？", "keywords": ["慷慨", "付出", "被需要", "被动"], "description": "总是愿意付出，无论是金钱还是情感，常常被当作依靠" },
+    "BOSS": { "name": "领导者", "motto": "方向盘给我，我来开。", "keywords": ["领导", "决策", "责任", "魄力"], "description": "天生的领导者，无论走到哪里都会被推上C位" },
+    "THAN-K": { "name": "感恩者", "motto": "我感谢苍天！我感谢大地！", "keywords": ["感恩", "乐观", "满足", "祝福"], "description": "永远怀着一颗感恩的心，生活中的小确幸都能让你感动" },
+    "OH-NO": { "name": "哦不人", "motto": "哦不！我怎么会是这个人格？！", "keywords": ["惊讶", "不确定", "自我怀疑", "反转"], "description": "总是被生活的小意外打个措手不及，但也能快速适应" },
+    "GOGO": { "name": "行者", "motto": "gogogo~出发咯", "keywords": ["行动", "热情", "探索", "冲动"], "description": "永远在路上，说走就走是人生信条" },
+    "SEXY": { "name": "尤物", "motto": "您就是天生的尤物！", "keywords": ["魅力", "自信", "吸引力", "神秘"], "description": "与生俱来的魅力，走到哪里都是焦点" },
+    "LOVE-R": { "name": "多情者", "motto": "爱意太满，现实显得有点贫瘠。", "keywords": ["浪漫", "深情", "理想", "付出"], "description": "爱情是生活的全部意义，永远在追寻真爱的路上" },
+    "MUM": { "name": "妈妈", "motto": "或许...我可以叫你妈妈吗....?", "keywords": ["照顾", "温暖", "母性", "包容"], "description": "天生的照顾者，总能让身边的人感受到温暖" },
+    "FAKE": { "name": "伪人", "motto": "已经，没有人类了。", "keywords": ["伪装", "观察", "神秘", "疏离"], "description": "总能完美融入任何环境，但内心始终保持距离" },
+    "OJBK": { "name": "无所谓人", "motto": "我说随便，是真的随便。", "keywords": ["随和", "佛系", "包容", "无欲"], "description": "真正佛系的存在，什么都可以，什么都行" },
+    "MALO": { "name": "吗喽", "motto": "人生是个副本，而我只是一只吗喽。", "keywords": ["自嘲", "可爱", "摸鱼", "快乐"], "description": "以自嘲化解压力，永远保持可爱的心态" },
+    "JOKE-R": { "name": "小丑", "motto": "原来我们都是小丑。", "keywords": ["幽默", "自嘲", "表演", "隐藏"], "description": "用笑声掩饰真实情绪，是最高明的伪装" },
+    "WOC": { "name": "握草人", "motto": "卧槽，我怎么是这个人格？", "keywords": ["惊讶", "反转", "真实", "直率"], "description": "总能被生活惊到，反应永远是真实的" },
+    "THIN-K": { "name": "思考者", "motto": "已深度思考100s。", "keywords": ["思考", "分析", "深度", "理性"], "description": "永远在思考，大脑24小时不停转" },
+    "SHIT": { "name": "愤世者", "motto": "这个世界，构石一坨。", "keywords": ["批判", "真实", "不满", "觉醒"], "description": "看透世界本质，永远保持批判精神" },
+    "ZZZZ": { "name": "装死者", "motto": "我没死，我只是在睡觉。", "keywords": ["休息", "逃避", "充电", "慵懒"], "description": "永远需要充电，睡眠是人生第一大事" },
+    "POOR": { "name": "贫困者", "motto": "我穷，但我很专。", "keywords": ["专注", "纯粹", "贫穷", "热爱"], "description": "物质可能匮乏，但精神世界富足" },
+    "MONK": { "name": "僧人", "motto": "没有那种世俗的欲望。", "keywords": ["淡泊", "超脱", "平静", "智慧"], "description": "已看破红尘，内心平静如水" },
+    "IMSB": { "name": "傻者", "motto": "认真的么？我真的是傻逼么？", "keywords": ["怀疑", "自嘲", "迷茫", "真实"], "description": "永远在自我怀疑和自我确认中摇摆" },
+    "SOLO": { "name": "孤儿", "motto": "我哭了，我怎么会是孤儿？", "keywords": ["独立", "孤独", "坚强", "自怜"], "description": "习惯了一个人，但偶尔也会感到孤独" },
+    "FUCK": { "name": "草者", "motto": "操！这是什么人格？", "keywords": ["直率", "情绪化", "真实", "释放"], "description": "情绪表达最直接的一类，永远真实" },
+    "DEAD": { "name": "死者", "motto": "我，还活着吗？", "keywords": ["虚无", "迷茫", "深度", "追问"], "description": "总是在追问存在的意义，思维深度max" },
+    "IMFW": { "name": "废物", "motto": "我真的...是废物吗？", "keywords": ["自我怀疑", "低自尊", "敏感", "成长"], "description": "总觉得自己不够好，其实潜力很大" },
+    "HHHH": { "name": "傻乐者", "motto": "哈哈哈哈哈哈。", "keywords": ["快乐", "简单", "乐观", "治愈"], "description": "永远保持快乐，是最治愈的存在" },
+    "DRUNK": { "name": "酒鬼", "motto": "烈酒烧喉，不得不醉。", "keywords": ["沉醉", "感性", "逃避", "诗意"], "description": "总想逃离现实，在某种沉醉中寻找慰藉" },
+    "Dior-s": { "name": "屌丝", "motto": "等着我屌丝逆袭。", "keywords": ["逆袭", "坚持", "自嘲", "希望"], "description": "现在的处境不好，但永远相信会有逆袭的一天" }
+};
+
 const state = {
     zodiac: null,
     mbti: null,
@@ -62,19 +93,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadData() {
     try {
-        const [fortune, mbti, sbti] = await Promise.all([
+        const [fortune, mbti] = await Promise.all([
             fetch('data/weekly-fortune.json'),
-            fetch('data/mbti-data.json'),
-            fetch('data/sbti-data.json')
+            fetch('data/mbti-data.json')
         ]);
         state.fortuneData = await fortune.json();
         state.mbtiData = await mbti.json();
-        state.sbtiData = await sbti.json();
-        console.log('数据加载成功', {
-            fortune: Object.keys(state.fortuneData || {}).length,
-            mbti: Object.keys(state.mbtiData || {}).length,
-            sbti: Object.keys(state.sbtiData || {}).length
-        });
+        state.sbtiData = SBTI_DATA; // 使用内嵌数据
+        console.log('数据加载成功');
     } catch (e) {
         console.error('数据加载失败', e);
     }
@@ -97,24 +123,18 @@ function renderSelectors() {
         </button>
     `).join('');
     
-    // SBTI
-    const sbtiTypes = Object.keys(state.sbtiData || {});
-    console.log('SBTI类型数量:', sbtiTypes.length);
-    if (sbtiTypes.length === 0) {
-        document.getElementById('sbtiScroll').innerHTML = `
-            <div style="grid-column: span 4; text-align: center; color: var(--smoke); padding: 20px; font-size: 0.85rem;">
-                状态数据加载中...
-            </div>
-        `;
-    } else {
-        document.getElementById('sbtiScroll').innerHTML = sbtiTypes.map(code => {
-            const data = state.sbtiData[code];
-            return `<button class="sbti-btn" data-value="${code}">
-                <span class="sbti-code">${code}</span>
-                <span class="sbti-name">${data?.name || code}</span>
-            </button>`;
-        }).join('');
-    }
+    // SBTI - 使用内嵌数据
+    const sbtiTypes = Object.keys(SBTI_DATA);
+    document.getElementById('sbtiScroll').innerHTML = sbtiTypes.map(code => {
+        const data = SBTI_DATA[code];
+        return `<button class="sbti-btn" data-value="${code}">
+            <span class="sbti-code">${code}</span>
+            <span class="sbti-name">${data?.name || code}</span>
+        </button>`;
+    }).join('');
+    
+    // 同时存入state供后续使用
+    state.sbtiData = SBTI_DATA;
 }
 
 function bindEvents() {
