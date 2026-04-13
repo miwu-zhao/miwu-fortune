@@ -182,7 +182,14 @@ function bindEvents() {
 // ═══════════════════════════════════════════════
 
 function decode() {
-    if (!state.zodiac || !state.mbti || !state.sbti) {
+    // 检查是否全部选择
+    const missing = [];
+    if (!state.zodiac) missing.push('星象坐标');
+    if (!state.mbti) missing.push('人格图谱');
+    if (!state.sbti) missing.push('状态锚点');
+    
+    if (missing.length > 0) {
+        alert(`请先选择：${missing.join('、')}`);
         return;
     }
     
@@ -196,11 +203,18 @@ function decode() {
 }
 
 function renderResult() {
-    const z = state.fortuneData.horoscopes[state.zodiac];
-    const m = state.mbtiData[state.mbti];
-    const s = state.sbtiData[state.sbti];
+    const z = state.fortuneData?.horoscopes?.[state.zodiac];
+    const m = state.mbtiData?.[state.mbti];
+    const s = state.sbtiData?.[state.sbti];
     
-    if (!z || !m || !s) return;
+    console.log('渲染结果:', { zodiac: state.zodiac, mbti: state.mbti, sbti: state.sbti });
+    console.log('数据状态:', { z: !!z, m: !!m, s: !!s });
+    
+    if (!z || !m || !s) {
+        alert('数据加载异常，请刷新页面重试');
+        console.error('数据缺失:', { z, m, s });
+        return;
+    }
     
     // 核心摘要
     document.getElementById('fortuneTitle').textContent = generateTitle(z, m, s);
