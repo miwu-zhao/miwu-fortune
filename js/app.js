@@ -70,6 +70,11 @@ async function loadData() {
         state.fortuneData = await fortune.json();
         state.mbtiData = await mbti.json();
         state.sbtiData = await sbti.json();
+        console.log('数据加载成功', {
+            fortune: Object.keys(state.fortuneData || {}).length,
+            mbti: Object.keys(state.mbtiData || {}).length,
+            sbti: Object.keys(state.sbtiData || {}).length
+        });
     } catch (e) {
         console.error('数据加载失败', e);
     }
@@ -94,13 +99,22 @@ function renderSelectors() {
     
     // SBTI
     const sbtiTypes = Object.keys(state.sbtiData || {});
-    document.getElementById('sbtiScroll').innerHTML = sbtiTypes.map(code => {
-        const data = state.sbtiData[code];
-        return `<button class="sbti-btn" data-value="${code}">
-            <span class="sbti-code">${code}</span>
-            <span class="sbti-name">${data?.name || code}</span>
-        </button>`;
-    }).join('');
+    console.log('SBTI类型数量:', sbtiTypes.length);
+    if (sbtiTypes.length === 0) {
+        document.getElementById('sbtiScroll').innerHTML = `
+            <div style="grid-column: span 4; text-align: center; color: var(--smoke); padding: 20px; font-size: 0.85rem;">
+                状态数据加载中...
+            </div>
+        `;
+    } else {
+        document.getElementById('sbtiScroll').innerHTML = sbtiTypes.map(code => {
+            const data = state.sbtiData[code];
+            return `<button class="sbti-btn" data-value="${code}">
+                <span class="sbti-code">${code}</span>
+                <span class="sbti-name">${data?.name || code}</span>
+            </button>`;
+        }).join('');
+    }
 }
 
 function bindEvents() {
