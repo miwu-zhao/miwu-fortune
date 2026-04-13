@@ -614,3 +614,47 @@ function fadeUp(el) {
         el.style.transform = 'translateY(0)';
     });
 }
+
+// ═══════════════════════════════════════════════
+// 访问计数器
+// ═══════════════════════════════════════════════
+
+async function initVisitorCounter() {
+    const counterNum = document.getElementById('counterNum');
+    
+    // 使用免费计数器API
+    try {
+        const response = await fetch('https://hits.dwyl.com/miwu-zhao/miwu-fortune.json');
+        const data = await response.json();
+        const count = data.value || 0;
+        
+        // 动画显示数字
+        animateCounter(counterNum, count);
+    } catch (e) {
+        // 如果API失败，使用本地存储模拟
+        let count = parseInt(localStorage.getItem('miwu_visitor_count') || '0');
+        count++;
+        localStorage.setItem('miwu_visitor_count', count.toString());
+        animateCounter(counterNum, count);
+    }
+}
+
+function animateCounter(el, target) {
+    let current = 0;
+    const duration = 1500;
+    const step = target / (duration / 16);
+    
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        el.textContent = Math.floor(current).toLocaleString();
+    }, 16);
+}
+
+// 页面加载时初始化计数器
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initVisitorCounter, 500);
+});

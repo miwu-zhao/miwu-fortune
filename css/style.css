@@ -1030,3 +1030,67 @@ body {
     background: var(--haze);
     border-radius: 2px;
 }
+
+/* ─────────────────────────────────────────────
+   访问计数器
+   ───────────────────────────────────────────── */
+.visitor-counter {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: rgba(15, 12, 25, 0.85);
+    border: 1px solid rgba(201, 169, 98, 0.2);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: var(--smoke);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    transition: all var(--duration) var(--ease);
+}
+
+.visitor-counter:hover {
+    border-color: rgba(201, 169, 98, 0.4);
+    transform: translateY(-2px);
+}
+
+.counter-icon {
+    color: var(--gold);
+    font-size: 0.9rem;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.counter-text {
+    letter-spacing: 0.05em;
+}
+
+.counter-num {
+    color: var(--gold);
+    font-weight: 600;
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    min-width: 24px;
+    text-align: center;
+}
+
+.counter-unit {
+    color: var(--smoke);
+    opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+    .visitor-counter {
+        bottom: 16px;
+        right: 16px;
+        padding: 8px 12px;
+        font-size: 0.7rem;
+    }
+}
